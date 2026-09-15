@@ -7,7 +7,11 @@ try {
         upgrade: true,
         jsonUpgraded: true,
         silent: false,
-        packageManager: 'npm'
+        packageManager: 'npm',
+        // Without an explicit packageFile ncu falls back to reading package.json from
+        // stdin, which never arrives on a runner: it gives up and resolves nothing, so
+        // the outputs below are never set and every downstream `if:` silently sees ''.
+        packageFile: 'package.json'
     };
     ncuOptions = ncuOptions ? { ...defaultOptions, ...ncuOptions } : defaultOptions;
     console.log(`ncu-options`, ncuOptions);
